@@ -31,11 +31,14 @@ def make_env(scenario_name, benchmark=False):
     '''
     from multiagent.environment import MultiAgentEnv
     import multiagent.scenarios as scenarios
+    import multiagent.configs as configs
 
     # load scenario from script
     scenario = scenarios.load(scenario_name + ".py").Scenario()
+    # load config from script
+    config = configs.load(scenario_name + ".py").Config()
     # create world
-    world = scenario.make_world()
+    world = scenario.make_world(config.get_config())
     # create multiagent environment
     if benchmark:        
         env = MultiAgentEnv(world, scenario.reset_world, scenario.reward, scenario.observation, scenario.benchmark_data)
