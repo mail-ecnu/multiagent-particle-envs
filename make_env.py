@@ -12,7 +12,7 @@ of size (env.world.dim_p + env.world.dim_c, 1). Physical actions precede
 communication actions in this array. See environment.py for more details.
 """
 
-def make_env(scenario_name, benchmark=False):
+def make_env(scenario_name, config_name, benchmark=False):
     '''
     Creates a MultiAgentEnv object as env. This can be used similar to a gym
     environment by calling env.reset() and env.step().
@@ -21,6 +21,8 @@ def make_env(scenario_name, benchmark=False):
     Input:
         scenario_name   :   name of the scenario from ./scenarios/ to be Returns
                             (without the .py extension)
+        config_name     :   name of the scenario configuration from ./configs/ to
+                            be Reeturns (without the .py extension)
         benchmark       :   whether you want to produce benchmarking data
                             (usually only done during evaluation)
 
@@ -36,7 +38,7 @@ def make_env(scenario_name, benchmark=False):
     # load scenario from script
     scenario = scenarios.load(scenario_name + ".py").Scenario()
     # load config from script
-    config = configs.load(scenario_name + ".py").Config()
+    config = configs.load(scenario_name + '_' + config_name + ".py").Config()
     # create world
     world = scenario.make_world(config.get_config())
     # create multiagent environment
